@@ -899,19 +899,22 @@ layui.define(['laytpl', 'laypage', 'layer', 'form', 'util', 'i18n'], function(ex
     //显示隐藏分页栏
     that.layPage[(count == 0 || (data.length === 0 && curr == 1)) ? 'addClass' : 'removeClass'](HIDE);
     
-    //排序
-    if(sort){
-      return render();
-    }
-    
+    //如果无数据
     if(data.length === 0){
       that.renderForm();
       that.errorView(options.text.none);
     } else {
       that.layFixed.removeClass(HIDE);
-      render(); //渲染数据
-      that.renderTotal(data, totalRowData); //数据合计
     }
+    
+    //如果执行初始排序
+    if(sort){
+      return render();
+    }
+    
+    //正常初始化数据渲染
+    render(); //渲染数据
+    that.renderTotal(data, totalRowData); //数据合计
 
     //同步分页状态
     if(options.page){
