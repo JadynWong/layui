@@ -6,12 +6,13 @@
     
  */
  
-layui.define(['layer', 'form'], function(exports){
+layui.define(['layer', 'form', 'i18n'], function(exports){
   "use strict";
   
   var $ = layui.$
   ,layer = layui.layer
   ,form = layui.form
+  ,i18n = layui.i18n
   ,hint = layui.hint()
   ,device = layui.device()
   
@@ -200,7 +201,7 @@ layui.define(['layer', 'form'], function(exports){
         
         if(parentNode.tagName.toLowerCase() === 'pre'){
           if(e.shiftKey) return
-          layer.msg('请暂时用shift+enter');
+          layer.msg(i18n.L('layedit.ShiftKey'));
           return false;
         }
         iframeDOM.execCommand('formatBlock', false, '<p>');
@@ -399,7 +400,7 @@ layui.define(['layer', 'form'], function(exports){
                   ,alt: res.data.title
                 }, range);
               } else {
-                layer.msg(res.msg||'上传失败');
+                layer.msg(res.msg||i18n.L('layedit.UploadFailed'));
               }
             }
           });
@@ -418,7 +419,7 @@ layui.define(['layer', 'form'], function(exports){
       ,help: function(){
         layer.open({
           type: 2
-          ,title: '帮助'
+          ,title: i18n.L('layedit.Help')
           ,area: ['600px', '380px']
           ,shadeClose: true
           ,shade: 0.1
@@ -485,7 +486,7 @@ layui.define(['layer', 'form'], function(exports){
       ,shade: 0.05
       ,shadeClose: true
       ,moveType: 1
-      ,title: '超链接'
+      ,title: i18n.L('layedit.HyperLink')
       ,skin: 'layui-layer-msg'
       ,content: ['<ul class="layui-form" style="margin: 15px;">'
         ,'<li class="layui-form-item">'
@@ -495,17 +496,17 @@ layui.define(['layer', 'form'], function(exports){
             ,'</div>'
         ,'</li>'
         ,'<li class="layui-form-item">'
-          ,'<label class="layui-form-label" style="width: 60px;">打开方式</label>'
+          ,'<label class="layui-form-label" style="width: 60px;">'+ i18n.L('layedit.OpenWith') +'</label>'
           ,'<div class="layui-input-block" style="margin-left: 90px">'
-            ,'<input type="radio" name="target" value="_self" class="layui-input" title="当前窗口"'
+            ,'<input type="radio" name="target" value="_self" class="layui-input" title="'+ i18n.L('layedit.CurrentWindow') +'"'
             + ((options.target==='_self' || !options.target) ? 'checked' : '') +'>'
-            ,'<input type="radio" name="target" value="_blank" class="layui-input" title="新窗口" '
+            ,'<input type="radio" name="target" value="_blank" class="layui-input" title="'+ i18n.L('layedit.NewWindow') +'" '
             + (options.target==='_blank' ? 'checked' : '') +'>'
           ,'</div>'
         ,'</li>'
         ,'<li class="layui-form-item" style="text-align: center;">'
-          ,'<button type="button" lay-submit lay-filter="layedit-link-yes" class="layui-btn"> 确定 </button>'
-          ,'<button style="margin-left: 20px;" type="button" class="layui-btn layui-btn-primary"> 取消 </button>'
+          ,'<button type="button" lay-submit lay-filter="layedit-link-yes" class="layui-btn"> '+ i18n.L('layedit.Confirm') +' </button>'
+          ,'<button style="margin-left: 20px;" type="button" class="layui-btn layui-btn-primary"> '+ i18n.L('layedit.Cancel') +' </button>'
         ,'</li>'
       ,'</ul>'].join('')
       ,success: function(layero, index){
@@ -575,11 +576,11 @@ layui.define(['layer', 'form'], function(exports){
       ,shade: 0.05
       ,shadeClose: true
       ,moveType: 1
-      ,title: '插入代码'
+      ,title: i18n.L('layedit.InsertCode')
       ,skin: 'layui-layer-msg'
       ,content: ['<ul class="layui-form layui-form-pane" style="margin: 15px;">'
         ,'<li class="layui-form-item">'
-          ,'<label class="layui-form-label">请选择语言</label>'
+          ,'<label class="layui-form-label">'+ i18n.L('layedit.PleaseSelectLanguage') +'</label>'
           ,'<div class="layui-input-block">'
             ,'<select name="lang">'
               ,'<option value="JavaScript">JavaScript</option>'
@@ -595,14 +596,14 @@ layui.define(['layer', 'form'], function(exports){
           ,'</div>'
         ,'</li>'
         ,'<li class="layui-form-item layui-form-text">'
-          ,'<label class="layui-form-label">代码</label>'
+          ,'<label class="layui-form-label">'+ i18n.L('layedit.Code') +'</label>'
           ,'<div class="layui-input-block">'
             ,'<textarea name="code" lay-verify="required" autofocus="true" class="layui-textarea" style="height: 200px;"></textarea>'
           ,'</div>'
         ,'</li>'
         ,'<li class="layui-form-item" style="text-align: center;">'
-          ,'<button type="button" lay-submit lay-filter="layedit-code-yes" class="layui-btn"> 确定 </button>'
-          ,'<button style="margin-left: 20px;" type="button" class="layui-btn layui-btn-primary"> 取消 </button>'
+          ,'<button type="button" lay-submit lay-filter="layedit-code-yes" class="layui-btn"> '+ i18n.L('layedit.Confirm') +' </button>'
+          ,'<button style="margin-left: 20px;" type="button" class="layui-btn layui-btn-primary"> '+ i18n.L('layedit.Cancel') +' </button>'
         ,'</li>'
       ,'</ul>'].join('')
       ,success: function(layero, index){
@@ -623,24 +624,24 @@ layui.define(['layer', 'form'], function(exports){
   
   //全部工具
   ,tools = {
-    html: '<i class="layui-icon layedit-tool-html" title="HTML源代码" lay-command="html" layedit-event="html"">&#xe64b;</i><span class="layedit-tool-mid"></span>'
-    ,strong: '<i class="layui-icon layedit-tool-b" title="加粗" lay-command="Bold" layedit-event="b"">&#xe62b;</i>'
-    ,italic: '<i class="layui-icon layedit-tool-i" title="斜体" lay-command="italic" layedit-event="i"">&#xe644;</i>'
-    ,underline: '<i class="layui-icon layedit-tool-u" title="下划线" lay-command="underline" layedit-event="u"">&#xe646;</i>'
-    ,del: '<i class="layui-icon layedit-tool-d" title="删除线" lay-command="strikeThrough" layedit-event="d"">&#xe64f;</i>'
+    html: '<i class="layui-icon layedit-tool-html" title="'+ i18n.L('layedit.Tool.HtmlSourceCode') +'" lay-command="html" layedit-event="html"">&#xe64b;</i><span class="layedit-tool-mid"></span>'
+    ,strong: '<i class="layui-icon layedit-tool-b" title="'+ i18n.L('layedit.Tool.Bold') +'" lay-command="Bold" layedit-event="b"">&#xe62b;</i>'
+    ,italic: '<i class="layui-icon layedit-tool-i" title="'+ i18n.L('layedit.Tool.Italic') +'" lay-command="italic" layedit-event="i"">&#xe644;</i>'
+    ,underline: '<i class="layui-icon layedit-tool-u" title="'+ i18n.L('layedit.Tool.UnderLine') +'" lay-command="underline" layedit-event="u"">&#xe646;</i>'
+    ,del: '<i class="layui-icon layedit-tool-d" title="'+ i18n.L('layedit.Tool.StrikeThrough') +'" lay-command="strikeThrough" layedit-event="d"">&#xe64f;</i>'
     
     ,'|': '<span class="layedit-tool-mid"></span>'
     
-    ,left: '<i class="layui-icon layedit-tool-left" title="左对齐" lay-command="justifyLeft" layedit-event="left"">&#xe649;</i>'
-    ,center: '<i class="layui-icon layedit-tool-center" title="居中对齐" lay-command="justifyCenter" layedit-event="center"">&#xe647;</i>'
-    ,right: '<i class="layui-icon layedit-tool-right" title="右对齐" lay-command="justifyRight" layedit-event="right"">&#xe648;</i>'
-    ,link: '<i class="layui-icon layedit-tool-link" title="插入链接" layedit-event="link"">&#xe64c;</i>'
-    ,unlink: '<i class="layui-icon layedit-tool-unlink layui-disabled" title="清除链接" lay-command="unlink" layedit-event="unlink"">&#xe64d;</i>'
-    ,face: '<i class="layui-icon layedit-tool-face" title="表情" layedit-event="face"">&#xe650;</i>'
-    ,image: '<i class="layui-icon layedit-tool-image" title="图片" layedit-event="image">&#xe64a;<input type="file" name="file"></i>'
-    ,code: '<i class="layui-icon layedit-tool-code" title="插入代码" layedit-event="code">&#xe64e;</i>'
+    ,left: '<i class="layui-icon layedit-tool-left" title="'+ i18n.L('layedit.Tool.AlignLeft') +'" lay-command="justifyLeft" layedit-event="left"">&#xe649;</i>'
+    ,center: '<i class="layui-icon layedit-tool-center" title="'+ i18n.L('layedit.Tool.AlignCenter') +'" lay-command="justifyCenter" layedit-event="center"">&#xe647;</i>'
+    ,right: '<i class="layui-icon layedit-tool-right" title="'+ i18n.L('layedit.Tool.AlignRight') +'" lay-command="justifyRight" layedit-event="right"">&#xe648;</i>'
+    ,link: '<i class="layui-icon layedit-tool-link" title="'+ i18n.L('layedit.Tool.InertHyperLink') +'" layedit-event="link"">&#xe64c;</i>'
+    ,unlink: '<i class="layui-icon layedit-tool-unlink layui-disabled" title="'+ i18n.L('layedit.Tool.ClearHyperLink') +'" lay-command="unlink" layedit-event="unlink"">&#xe64d;</i>'
+    ,face: '<i class="layui-icon layedit-tool-face" title="'+ i18n.L('layedit.Tool.Emoj') +'" layedit-event="face"">&#xe650;</i>'
+    ,image: '<i class="layui-icon layedit-tool-image" title="'+ i18n.L('layedit.Tool.Picture') +'" layedit-event="image">&#xe64a;<input type="file" name="file"></i>'
+    ,code: '<i class="layui-icon layedit-tool-code" title="'+ i18n.L('layedit.Tool.InsertCode') +'" layedit-event="code">&#xe64e;</i>'
     
-    ,help: '<i class="layui-icon layedit-tool-help" title="帮助" layedit-event="help">&#xe607;</i>'
+    ,help: '<i class="layui-icon layedit-tool-help" title="'+ i18n.L('layedit.Tool.Help') +'" layedit-event="help">&#xe607;</i>'
   }
   
   ,edit = new Edit();

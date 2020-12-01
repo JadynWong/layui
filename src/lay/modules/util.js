@@ -6,10 +6,11 @@
     
 */
 
-layui.define('jquery', function(exports){
+layui.define(['jquery', 'i18n'], function(exports){
   "use strict";
   
   var $ = layui.$
+  ,i18n = layui.i18n
   
   //外部接口
   ,util = {
@@ -117,15 +118,15 @@ layui.define('jquery', function(exports){
       
       //30天以内，返回“多久前”
       if(stamp >= 1000*60*60*24){
-        return ((stamp/1000/60/60/24)|0) + '天前';
+        return ((stamp/1000/60/60/24)|0) + i18n.L('util.DaysAgo');
       } else if(stamp >= 1000*60*60){
-        return ((stamp/1000/60/60)|0) + '小时前';
+        return ((stamp/1000/60/60)|0) + i18n.L('util.HoursAgo');
       } else if(stamp >= 1000*60*3){ //3分钟以内为：刚刚
-        return ((stamp/1000/60)|0) + '分钟前';
+        return ((stamp/1000/60)|0) + i18n.L('util.MinutesAgo');
       } else if(stamp < 0){
-        return '未来';
+        return i18n.L('util.Future');
       } else {
-        return '刚刚';
+        return i18n.L('util.JustNow');
       }
     }
     

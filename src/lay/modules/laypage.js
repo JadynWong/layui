@@ -6,10 +6,11 @@
  
  */
 
-layui.define(function(exports){
+layui.define(['i18n'], function(exports){
   "use strict";
   
   var doc = document
+  ,i18n = layui.i18n
   ,id = 'getElementById'
   ,tag = 'getElementsByTagName'
   
@@ -147,7 +148,7 @@ layui.define(function(exports){
       }()
       
       //数据总数
-      ,count: '<span class="layui-laypage-count">共 '+ config.count +' 条</span>'
+      ,count: '<span class="layui-laypage-count">'+ i18n.L('laypage.Count', config.count + (config.more ? '+' : '')) +'</span>'
       
       //每页条数
       ,limit: function(){
@@ -156,7 +157,7 @@ layui.define(function(exports){
           options.push(
             '<option value="'+ item +'"'
             +(item === config.limit ? 'selected' : '') 
-            +'>'+ item +' 条/页</option>'
+            +'>'+ i18n.L('laypage.Limit', item) +'</option>'
           );
         });
         return options.join('') +'</select></span>';

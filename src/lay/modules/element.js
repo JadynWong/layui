@@ -6,10 +6,11 @@
     
  */
  
-layui.define('jquery', function(exports){
+layui.define(['jquery', 'i18n'], function(exports){
   "use strict";
   
   var $ = layui.$
+  ,i18n = layui.i18n
   ,hint = layui.hint()
   ,device = layui.device()
   
@@ -180,7 +181,7 @@ layui.define('jquery', function(exports){
           othis.attr('overflow', '');
           span.on('click', function(e){
             title[this.title ? 'removeClass' : 'addClass'](MORE);
-            this.title = this.title ? '' : '收缩';
+            this.title = this.title ? '' : i18n.L('element.Shrink');
           });
         } else {
           title.find('.'+BAR).remove();

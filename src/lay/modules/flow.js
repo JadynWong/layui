@@ -7,10 +7,12 @@
  */
  
  
-layui.define('jquery', function(exports){
+layui.define(['jquery', 'i18n'], function(exports){
   "use strict";
   
-  var $ = layui.$, Flow = function(options){}
+  var $ = layui.$
+  ,i18n = layui.i18n
+  ,Flow = function(options){}
   ,ELEM_MORE = 'layui-flow-more'
   ,ELEM_LOAD = '<i class="layui-anim layui-anim-rotate layui-anim-loop layui-icon ">&#xe63e;</i>';
 
@@ -23,13 +25,13 @@ layui.define('jquery', function(exports){
     var scrollElem = $(options.scrollElem || document); //滚动条所在元素
     var mb = options.mb || 50; //与底部的临界距离
     var isAuto = 'isAuto' in options ? options.isAuto : true; //是否自动滚动加载
-    var end = options.end || '没有更多了'; //“末页”显示文案
+    var end = options.end || i18n.L('flow.End'); //“末页”显示文案
     
     //滚动条所在元素是否为document
     var notDocment = options.scrollElem && options.scrollElem !== document;
     
     //加载更多
-    var ELEM_TEXT = '<cite>加载更多</cite>'
+    var ELEM_TEXT = '<cite>'+ i18n.L('flow.LoadMore') +'</cite>'
     ,more = $('<div class="layui-flow-more"><a href="javascript:;">'+ ELEM_TEXT +'</a></div>');
     
     if(!elem.find('.layui-flow-more')[0]){

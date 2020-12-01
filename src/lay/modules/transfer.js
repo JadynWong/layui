@@ -6,12 +6,13 @@
 
  */
 
-layui.define(['laytpl', 'form'], function(exports){
+layui.define(['laytpl', 'form', 'i18n'], function(exports){
   "use strict";
   
   var $ = layui.$
   ,laytpl = layui.laytpl
   ,form = layui.form
+  ,i18n = layui.i18n
   
   //模块名
   ,MOD_NAME = 'transfer'
@@ -77,7 +78,7 @@ layui.define(['laytpl', 'form'], function(exports){
       ,'{{# if(d.data.showSearch){ }}'
       ,'<div class="layui-transfer-search">'
         ,'<i class="layui-icon layui-icon-search"></i>'
-        ,'<input type="input" class="layui-input" placeholder="关键词搜索">'
+        ,'<input type="input" class="layui-input" placeholder="'+ i18n.L('transfer.KeywordSearch') +'">'
       ,'</div>'
       ,'{{# } }}'
       ,'<ul class="layui-transfer-data"></ul>'
@@ -114,7 +115,7 @@ layui.define(['laytpl', 'form'], function(exports){
 
   //默认配置
   Class.prototype.config = {
-    title: ['列表一', '列表二']
+    title: [i18n.L('transfer.Title1'), i18n.L('transfer.Title2')]
     ,width: 200
     ,height: 360
     ,data: [] //数据源
@@ -122,8 +123,8 @@ layui.define(['laytpl', 'form'], function(exports){
     ,showSearch: false //是否开启搜索
     ,id: '' //唯一索引，默认自增 index
     ,text: {
-      none: '无数据'
-      ,searchNone: '无匹配数据'
+      none: i18n.L('transfer.None')
+      ,searchNone: i18n.L('transfer.SearchNone')
     }
   };
   

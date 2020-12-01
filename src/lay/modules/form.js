@@ -6,11 +6,12 @@
     
  */
  
-layui.define('layer', function(exports){
+layui.define(['layer', 'i18n'], function(exports){
   "use strict";
   
   var $ = layui.$
   ,layer = layui.layer
+  ,i18n = layui.i18n
   ,hint = layui.hint()
   ,device = layui.device()
   
@@ -22,30 +23,30 @@ layui.define('layer', function(exports){
       verify: {
         required: [
           /[\S]+/
-          ,'必填项不能为空'
+          ,i18n.L('form.Required')
         ]
         ,phone: [
           /^1\d{10}$/
-          ,'请输入正确的手机号'
+          ,i18n.L('form.Phone')
         ]
         ,email: [
           /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/
-          ,'邮箱格式不正确'
+          ,i18n.L('form.Email')
         ]
         ,url: [
           /(^#)|(^http(s*):\/\/[^\s]+\.[^\s]+)/
-          ,'链接格式不正确'
+          ,i18n.L('form.Url')
         ]
         ,number: function(value){
-          if(!value || isNaN(value)) return '只能填写数字'
+          if(!value || isNaN(value)) return i18n.L('form.Number')
         }
         ,date: [
           /^(\d{4})[-\/](\d{1}|0\d{1}|1[0-2])([-\/](\d{1}|0\d{1}|[1-2][0-9]|3[0-1]))*$/
-          ,'日期格式不正确'
+          ,i18n.L('form.Date')
         ]
         ,identity: [
           /(^\d{15}$)|(^\d{17}(x|X|\d)$)/
-          ,'请输入正确的身份证号'
+          ,i18n.L('form.Identity')
         ]
       }
     };
@@ -146,7 +147,7 @@ layui.define('layer', function(exports){
       
       //下拉选择框
       select: function(){
-        var TIPS = '请选择', CLASS = 'layui-form-select', TITLE = 'layui-select-title'
+        var TIPS = i18n.L('form.PleaseSelect'), CLASS = 'layui-form-select', TITLE = 'layui-select-title'
         ,NONE = 'layui-select-none', initValue = '', thatInput
         ,selects = elemForm.find('select')
         
@@ -356,7 +357,7 @@ layui.define('layer', function(exports){
             
             notOption(value, function(none){
               if(none){
-                dl.find('.'+NONE)[0] || dl.append('<p class="'+ NONE +'">无匹配项</p>');
+                dl.find('.'+NONE)[0] || dl.append('<p class="'+ NONE +'">'+ i18n.L('form.NotOption') +'</p>');
               } else {
                 dl.find('.'+NONE).remove();
               }
@@ -460,7 +461,7 @@ layui.define('layer', function(exports){
                   arr.push('<dd lay-value="'+ item.value +'" class="'+ (value === item.value ?  THIS : '') + (item.disabled ? (' '+DISABLED) : '') +'">'+ item.innerHTML +'</dd>');
                 }
               });
-              arr.length === 0 && arr.push('<dd lay-value="" class="'+ DISABLED +'">没有选项</dd>');
+              arr.length === 0 && arr.push('<dd lay-value="" class="'+ DISABLED +'">'+ i18n.L('form.NotHaveOption') +'</dd>');
               return arr.join('');
             }(othis.find('*')) +'</dl>'
           ,'</div>'].join(''));
@@ -604,7 +605,7 @@ layui.define('layer', function(exports){
       }
     };
     type ? (
-      items[type] ? items[type]() : hint.error('不支持的'+ type + '表单渲染')
+      items[type] ? items[type]() : hint.error(i18n.L('form.NotSupportFormRender',type))
     ) : layui.each(items, function(index, item){
       item();
     });
@@ -661,7 +662,7 @@ layui.define('layer', function(exports){
                 return othis;
               }(), {tips: 1});
             } else if(verType === 'alert') {
-              layer.alert(errorText, {title: '提示', shadeClose: true});
+              layer.alert(errorText, {title: i18n.L('form.Tip'), shadeClose: true});
             } else {
               layer.msg(errorText, {icon: 5, shift: 6});
             }

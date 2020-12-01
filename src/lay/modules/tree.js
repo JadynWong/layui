@@ -6,10 +6,11 @@
 
  */
 
-layui.define('form', function(exports){
+layui.define(['form', 'i18n'], function(exports){
   "use strict";
   
   var $ = layui.$
+  ,i18n = layui.i18n
   ,form = layui.form
   ,layer = layui.layer
   
@@ -92,8 +93,8 @@ layui.define('form', function(exports){
     ,edit: false  //是否开启节点的操作图标
     
     ,text: {
-      defaultNodeName: '未命名' //节点默认名称
-      ,none: '无数据'  //数据为空时的文本提示
+      defaultNodeName: i18n.L('tree.DefaultNodeName') //节点默认名称
+      ,none: i18n.L('tree.None')  //数据为空时的文本提示
     }
   };
   
@@ -535,7 +536,7 @@ layui.define('form', function(exports){
 
       //删除
       } else {
-        layer.confirm('确认删除该节点 "<span style="color: #999;">'+ (item.title || '') +'</span>" 吗？', function(index){
+        layer.confirm(i18n.L('tree.DeleteNodeWarning', '"<span style="color: #999;">' + (item.title || '') + '</span>"'), function(index){
           options.operate && options.operate(returnObj); //节点删除的回调
           returnObj.status = 'remove'; //标注节点删除
           

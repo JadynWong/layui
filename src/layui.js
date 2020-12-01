@@ -16,6 +16,7 @@
     ,status: {} //记录模块加载状态
     ,timeout: 10 //符合规范的模块请求最长等待秒数
     ,event: {} //记录模块自定义事件
+    ,diabledCss: false //禁止自动加载css
   }
 
   ,Layui = function(){
@@ -274,6 +275,12 @@
 
   //css内部加载器
   Layui.prototype.addcss = function(firename, fn, cssname){
+    if(config.diabledCss){
+      var that = this;
+      if (typeof fn !== 'function') return that;
+      setTimeout(fn,1);
+      return that;
+    }
     return layui.link(config.dir + 'css/' + firename, fn, cssname);
   };
 

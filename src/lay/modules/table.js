@@ -6,7 +6,7 @@
     
  */
  
-layui.define(['laytpl', 'laypage', 'layer', 'form', 'util'], function(exports){
+layui.define(['laytpl', 'laypage', 'layer', 'form', 'util', 'i18n'], function(exports){
   "use strict";
   
   var $ = layui.$
@@ -15,6 +15,7 @@ layui.define(['laytpl', 'laypage', 'layer', 'form', 'util'], function(exports){
   ,layer = layui.layer
   ,form = layui.form
   ,util = layui.util
+  ,i18n = layer.i18n
   ,hint = layui.hint()
   ,device = layui.device()
 
@@ -442,17 +443,17 @@ layui.define(['laytpl', 'laypage', 'layer', 'form', 'util'], function(exports){
     //添加工具栏右侧面板
     var layout = {
       filter: {
-        title: '筛选列'
+        title: i18n.L('table.FilterColumn')
         ,layEvent: 'LAYTABLE_COLS'
         ,icon: 'layui-icon-cols'
       }
       ,exports: {
-        title: '导出'
+        title: i18n.L('table.Export')
         ,layEvent: 'LAYTABLE_EXPORT'
         ,icon: 'layui-icon-export'
       }
       ,print: {
-        title: '打印'
+        title: i18n.L('table.Print')
         ,layEvent: 'LAYTABLE_PRINT'
         ,icon: 'layui-icon-print'
       }
@@ -716,7 +717,7 @@ layui.define(['laytpl', 'laypage', 'layer', 'form', 'util'], function(exports){
             that.renderForm();
             that.errorView(
               res[response.msgName] ||
-              ('返回的数据不符合规范，正确的成功状态码应为："'+ response.statusName +'": '+ response.statusCode)
+              (i18n.L('table.InterfacteRequestDataFormatError"')+ response.statusName +'": '+ response.statusCode)
             );
           } else {
             that.renderData(res, curr, res[response.countName]), sort();
@@ -726,7 +727,7 @@ layui.define(['laytpl', 'laypage', 'layer', 'form', 'util'], function(exports){
           typeof options.done === 'function' && options.done(res, curr, res[response.countName]);
         }
         ,error: function(e, m){
-          that.errorView('数据接口请求异常：'+ m);
+          that.errorView(i18n.L('table.InterfacteRequestError') + m);
 
           that.renderForm();
           that.setColsWidth();
@@ -1341,15 +1342,15 @@ layui.define(['laytpl', 'laypage', 'layer', 'form', 'util'], function(exports){
         break;
         case 'LAYTABLE_EXPORT': //导出
           if(device.ie){
-            layer.tips('导出功能不支持 IE，请用 Chrome 等高级浏览器导出', this, {
+            layer.tips(i18n.L('table.ExportFeatureWarn'), this, {
               tips: 3
             })
           } else {
             openPanel({
               list: function(){
                 return [
-                  '<li data-type="csv">导出到 Csv 文件</li>'
-                  ,'<li data-type="xls">导出到 Excel 文件</li>'
+                  '<li data-type="csv">'+ i18n.L('table.ExportToCsv') +'</li>'
+                  ,'<li data-type="xls">'+ i18n.L('table.ExportToExcel') +'</li>'
                 ].join('')
               }()
               ,done: function(panel, list){
@@ -1362,7 +1363,7 @@ layui.define(['laytpl', 'laypage', 'layer', 'form', 'util'], function(exports){
           }
         break;
         case 'LAYTABLE_PRINT': //打印
-          var printWin = window.open('打印窗口', '_blank')
+          var printWin = window.open(i18n.L('table.PrintWindow'), '_blank')
           ,style = ['<style>'
             ,'body{font-size: 12px; color: #666;}'
             ,'table{width: 100%; border-collapse: collapse; border-spacing: 0;}'
@@ -1992,4 +1993,4 @@ layui.define(['laytpl', 'laypage', 'layer', 'form', 'util'], function(exports){
   exports(MOD_NAME, table);
 });
 
- 
+
