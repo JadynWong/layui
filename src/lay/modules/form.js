@@ -23,22 +23,22 @@ layui.define(['layer', 'i18n'], function(exports){
       verify: {
         required: [
           /[\S]+/
-          ,i18n.L('form.Required')
+          ,layui.i18n.L('form.Required')
         ]
         ,phone: [
           /^1\d{10}$/
-          ,i18n.L('form.Phone')
+          ,layui.i18n.L('form.Phone')
         ]
         ,email: [
           /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/
-          ,i18n.L('form.Email')
+          ,layui.i18n.L('form.Email')
         ]
         ,url: [
           /(^#)|(^http(s*):\/\/[^\s]+\.[^\s]+)/
-          ,i18n.L('form.Url')
+          ,layui.i18n.L('form.Url')
         ]
         ,number: function(value){
-          if(!value || isNaN(value)) return i18n.L('form.Number')
+          if(!value || isNaN(value)) return layui.i18n.L('form.Number')
         }
         ,date: [
           /^(\d{4})[-\/](\d{1}|0\d{1}|1[0-2])([-\/](\d{1}|0\d{1}|[1-2][0-9]|3[0-1]))*$/
@@ -46,7 +46,7 @@ layui.define(['layer', 'i18n'], function(exports){
         ]
         ,identity: [
           /(^\d{15}$)|(^\d{17}(x|X|\d)$)/
-          ,i18n.L('form.Identity')
+          ,layui.i18n.L('form.Identity')
         ]
       }
     };

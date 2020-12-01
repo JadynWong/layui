@@ -123,7 +123,7 @@ layui.define(function (exports) {
         return str;
     };
 
-
+    
     //输出接口
-    exports(MOD_NAME, i18n);
+    exports(MOD_NAME, new i18n());
 })

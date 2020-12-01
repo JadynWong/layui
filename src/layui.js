@@ -16,7 +16,7 @@
     ,status: {} //记录模块加载状态
     ,timeout: 10 //符合规范的模块请求最长等待秒数
     ,event: {} //记录模块自定义事件
-    ,diabledCss: false //禁止自动加载css
+    ,diabledCss: typeof(LAYUI_DISABLE_CSS) != 'undefined' && LAYUI_DISABLE_CSS//禁止自动加载css
   }
 
   ,Layui = function(){
