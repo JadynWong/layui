@@ -58,7 +58,15 @@ layui.define(['i18n'], function(exports){
     
     //当前页不能超过总页数
     if(config.curr > config.pages){
-      config.curr = config.pages;
+      if(config.more){
+        config.count = ((config.curr-1)*config.limit)+config.currlen
+        config.pages = config.curr;
+        if(config.currlen == 0 || config.currlen<config.limit){
+          config.more = false;
+        }
+      }
+      else
+        config.curr = config.pages;
     }
     
     //连续分页个数不能低于0且不能大于总页数
@@ -143,12 +151,12 @@ layui.define(['i18n'], function(exports){
       //下一页
       ,next: function(){
         return config.next 
-          ? '<a href="javascript:;" class="layui-laypage-next'+ (config.curr == config.pages ? (' ' + DISABLED) : '') +'" data-page="'+ (config.curr + 1) +'">'+ config.next +'</a>'
+          ? '<a href="javascript:;" class="layui-laypage-next'+ ((config.curr == config.pages && !config.more) ? (' ' + DISABLED) : '') +'" data-page="'+ (config.curr + 1) +'">'+ config.next +'</a>'
         : '';
       }()
       
       //数据总数
-      ,count: '<span class="layui-laypage-count">'+ i18n.L('laypage.Count', config.count + (config.more ? '+' : '')) +'</span>'
+      ,count: '<span class="layui-laypage-count">'+ layui.i18n.L('laypage.Count', config.count + (config.more ? '+' : '')) +'</span>'
       
       //每页条数
       ,limit: function(){
@@ -157,7 +165,7 @@ layui.define(['i18n'], function(exports){
           options.push(
             '<option value="'+ item +'"'
             +(item === config.limit ? 'selected' : '') 
-            +'>'+ i18n.L('laypage.Limit', item) +'</option>'
+            +'>'+ layui.i18n.L('laypage.Limit', item) +'</option>'
           );
         });
         return options.join('') +'</select></span>';
@@ -216,7 +224,11 @@ layui.define(['i18n'], function(exports){
       if(childs[i].nodeName.toLowerCase() === 'a'){
         laypage.on(childs[i], 'click', function(){
           var curr = this.getAttribute('data-page')|0;
-          if(curr < 1 || curr > config.pages) return;
+          if(curr < 1 || (curr > config.pages && !config.more)) return;
+          if(curr > config.pages && (config.currlen == 0 || config.currlen<config.limit)) {
+            config.more = false;
+            return;
+          }
           config.curr = curr;
           that.render();
         });

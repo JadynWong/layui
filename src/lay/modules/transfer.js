@@ -78,7 +78,7 @@ layui.define(['laytpl', 'form', 'i18n'], function(exports){
       ,'{{# if(d.data.showSearch){ }}'
       ,'<div class="layui-transfer-search">'
         ,'<i class="layui-icon layui-icon-search"></i>'
-        ,'<input type="input" class="layui-input" placeholder="'+ i18n.L('transfer.KeywordSearch') +'">'
+        ,'<input type="input" class="layui-input" placeholder="'+ layui.i18n.L('transfer.KeywordSearch') +'">'
       ,'</div>'
       ,'{{# } }}'
       ,'<ul class="layui-transfer-data"></ul>'
@@ -115,7 +115,7 @@ layui.define(['laytpl', 'form', 'i18n'], function(exports){
 
   //默认配置
   Class.prototype.config = {
-    title: [i18n.L('transfer.Title1'), i18n.L('transfer.Title2')]
+    title: [layui.i18n.L('transfer.Title1'), layui.i18n.L('transfer.Title2')]
     ,width: 200
     ,height: 360
     ,data: [] //数据源
@@ -123,8 +123,8 @@ layui.define(['laytpl', 'form', 'i18n'], function(exports){
     ,showSearch: false //是否开启搜索
     ,id: '' //唯一索引，默认自增 index
     ,text: {
-      none: i18n.L('transfer.None')
-      ,searchNone: i18n.L('transfer.SearchNone')
+      none: layui.i18n.L('transfer.None')
+      ,searchNone: layui.i18n.L('transfer.SearchNone')
     }
   };
   

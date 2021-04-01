@@ -443,17 +443,17 @@ layui.define(['laytpl', 'laypage', 'layer', 'form', 'util', 'i18n'], function(ex
     //添加工具栏右侧面板
     var layout = {
       filter: {
-        title: i18n.L('table.FilterColumn')
+        title: layui.i18n.L('table.FilterColumn')
         ,layEvent: 'LAYTABLE_COLS'
         ,icon: 'layui-icon-cols'
       }
       ,exports: {
-        title: i18n.L('table.Export')
+        title: layui.i18n.L('table.Export')
         ,layEvent: 'LAYTABLE_EXPORT'
         ,icon: 'layui-icon-export'
       }
       ,print: {
-        title: i18n.L('table.Print')
+        title: layui.i18n.L('table.Print')
         ,layEvent: 'LAYTABLE_PRINT'
         ,icon: 'layui-icon-print'
       }
@@ -700,24 +700,32 @@ layui.define(['laytpl', 'laypage', 'layer', 'form', 'util', 'i18n'], function(ex
       
       that.loading();
 
-      $.ajax({
+      var layuiAjax = $.ajax;
+      if(typeof(options.ajax) != 'undefined'){
+          layuiAjax = options.ajax;
+      }
+      layuiAjax({
         type: options.method || 'get'
         ,url: options.url
         ,contentType: options.contentType
         ,data: data
         ,dataType: 'json'
         ,headers: options.headers || {}
-        ,success: function(res){
+        ,success: function(data, status, res){
           //如果有数据解析的回调，则获得其返回的数据
           if(typeof options.parseData === 'function'){
-            res = options.parseData(res) || res;
+            res = options.parseData(data, status, res) || res;
+            
+          }else{
+            res = data;
           }
+          options.more = !!res['more'];
           //检查数据格式是否符合规范
           if(res[response.statusName] != response.statusCode){
             that.renderForm();
             that.errorView(
               res[response.msgName] ||
-              (i18n.L('table.InterfacteRequestDataFormatError"')+ response.statusName +'": '+ response.statusCode)
+              (layui.i18n.L('table.InterfacteRequestDataFormatError"')+ response.statusName +'": '+ response.statusCode)
             );
           } else {
             that.renderData(res, curr, res[response.countName]), sort();
@@ -727,7 +735,10 @@ layui.define(['laytpl', 'laypage', 'layer', 'form', 'util', 'i18n'], function(ex
           typeof options.done === 'function' && options.done(res, curr, res[response.countName]);
         }
         ,error: function(e, m){
-          that.errorView(i18n.L('table.InterfacteRequestError') + m);
+          if(typeof options.parseError === 'function'){
+            m = options.parseError(e, m) || m;
+          }
+          that.errorView(layui.i18n.L('table.InterfacteRequestError')+ m);
 
           that.renderForm();
           that.setColsWidth();
@@ -895,19 +906,20 @@ layui.define(['laytpl', 'laypage', 'layer', 'form', 'util', 'i18n'], function(ex
     
     if(data.length === 0){
       that.renderForm();
-      return that.errorView(options.text.none);
+      that.errorView(options.text.none);
     } else {
       that.layFixed.removeClass(HIDE);
+      render(); //渲染数据
+      that.renderTotal(data, totalRowData); //数据合计
     }
-    
-    render(); //渲染数据
-    that.renderTotal(data, totalRowData); //数据合计
 
     //同步分页状态
     if(options.page){
       options.page = $.extend({
         elem: 'layui-table-page' + options.index
         ,count: count
+        ,more: options.more
+        ,currlen: data.length
         ,limit: options.limit
         ,limits: options.limits || [10,20,30,40,50,60,70,80,90]
         ,groups: 3
@@ -925,6 +937,8 @@ layui.define(['laytpl', 'laypage', 'layer', 'form', 'util', 'i18n'], function(ex
           }
         }
       }, options.page);
+      options.page.more = options.more;
+      options.page.currlen = data.length;
       options.page.count = count; //更新总条数
       laypage.render(options.page);
     }
@@ -1342,15 +1356,15 @@ layui.define(['laytpl', 'laypage', 'layer', 'form', 'util', 'i18n'], function(ex
         break;
         case 'LAYTABLE_EXPORT': //导出
           if(device.ie){
-            layer.tips(i18n.L('table.ExportFeatureWarn'), this, {
+            layer.tips(layui.i18n.L('table.ExportFeatureWarn'), this, {
               tips: 3
             })
           } else {
             openPanel({
               list: function(){
                 return [
-                  '<li data-type="csv">'+ i18n.L('table.ExportToCsv') +'</li>'
-                  ,'<li data-type="xls">'+ i18n.L('table.ExportToExcel') +'</li>'
+                  '<li data-type="csv">'+ layui.i18n.L('table.ExportToCsv') +'</li>'
+                  ,'<li data-type="xls">'+ layui.i18n.L('table.ExportToExcel') +'</li>'
                 ].join('')
               }()
               ,done: function(panel, list){
@@ -1363,7 +1377,7 @@ layui.define(['laytpl', 'laypage', 'layer', 'form', 'util', 'i18n'], function(ex
           }
         break;
         case 'LAYTABLE_PRINT': //打印
-          var printWin = window.open(i18n.L('table.PrintWindow'), '_blank')
+          var printWin = window.open(layui.i18n.L('table.PrintWindow'), '_blank')
           ,style = ['<style>'
             ,'body{font-size: 12px; color: #666;}'
             ,'table{width: 100%; border-collapse: collapse; border-spacing: 0;}'

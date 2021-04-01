@@ -25,13 +25,13 @@ layui.define(['jquery', 'i18n'], function(exports){
     var scrollElem = $(options.scrollElem || document); //滚动条所在元素
     var mb = options.mb || 50; //与底部的临界距离
     var isAuto = 'isAuto' in options ? options.isAuto : true; //是否自动滚动加载
-    var end = options.end || i18n.L('flow.End'); //“末页”显示文案
+    var end = options.end || layui.i18n.L('flow.End'); //“末页”显示文案
     
     //滚动条所在元素是否为document
     var notDocment = options.scrollElem && options.scrollElem !== document;
     
     //加载更多
-    var ELEM_TEXT = '<cite>'+ i18n.L('flow.LoadMore') +'</cite>'
+    var ELEM_TEXT = '<cite>'+ layui.i18n.L('flow.LoadMore') +'</cite>'
     ,more = $('<div class="layui-flow-more"><a href="javascript:;">'+ ELEM_TEXT +'</a></div>');
     
     if(!elem.find('.layui-flow-more')[0]){

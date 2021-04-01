@@ -118,15 +118,15 @@ layui.define(['jquery', 'i18n'], function(exports){
       
       //30天以内，返回“多久前”
       if(stamp >= 1000*60*60*24){
-        return ((stamp/1000/60/60/24)|0) + i18n.L('util.DaysAgo');
+        return ((stamp/1000/60/60/24)|0) + layui.i18n.L('util.DaysAgo');
       } else if(stamp >= 1000*60*60){
-        return ((stamp/1000/60/60)|0) + i18n.L('util.HoursAgo');
+        return ((stamp/1000/60/60)|0) + layui.i18n.L('util.HoursAgo');
       } else if(stamp >= 1000*60*3){ //3分钟以内为：刚刚
-        return ((stamp/1000/60)|0) + i18n.L('util.MinutesAgo');
+        return ((stamp/1000/60)|0) + layui.i18n.L('util.MinutesAgo');
       } else if(stamp < 0){
-        return i18n.L('util.Future');
+        return layui.i18n.L('util.Future');
       } else {
-        return i18n.L('util.JustNow');
+        return layui.i18n.L('util.JustNow');
       }
     }
     

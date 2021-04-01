@@ -42,7 +42,7 @@ layui.define(['layer', 'i18n'], function(exports){
         }
         ,date: [
           /^(\d{4})[-\/](\d{1}|0\d{1}|1[0-2])([-\/](\d{1}|0\d{1}|[1-2][0-9]|3[0-1]))*$/
-          ,i18n.L('form.Date')
+          ,layui.i18n.L('form.Date')
         ]
         ,identity: [
           /(^\d{15}$)|(^\d{17}(x|X|\d)$)/
@@ -147,7 +147,7 @@ layui.define(['layer', 'i18n'], function(exports){
       
       //下拉选择框
       select: function(){
-        var TIPS = i18n.L('form.PleaseSelect'), CLASS = 'layui-form-select', TITLE = 'layui-select-title'
+        var TIPS = layui.i18n.L('form.PleaseSelect'), CLASS = 'layui-form-select', TITLE = 'layui-select-title'
         ,NONE = 'layui-select-none', initValue = '', thatInput
         ,selects = elemForm.find('select')
         
@@ -357,7 +357,7 @@ layui.define(['layer', 'i18n'], function(exports){
             
             notOption(value, function(none){
               if(none){
-                dl.find('.'+NONE)[0] || dl.append('<p class="'+ NONE +'">'+ i18n.L('form.NotOption') +'</p>');
+                dl.find('.'+NONE)[0] || dl.append('<p class="'+ NONE +'">'+ layui.i18n.L('form.NotOption') +'</p>');
               } else {
                 dl.find('.'+NONE).remove();
               }
@@ -461,7 +461,7 @@ layui.define(['layer', 'i18n'], function(exports){
                   arr.push('<dd lay-value="'+ item.value +'" class="'+ (value === item.value ?  THIS : '') + (item.disabled ? (' '+DISABLED) : '') +'">'+ item.innerHTML +'</dd>');
                 }
               });
-              arr.length === 0 && arr.push('<dd lay-value="" class="'+ DISABLED +'">'+ i18n.L('form.NotHaveOption') +'</dd>');
+              arr.length === 0 && arr.push('<dd lay-value="" class="'+ DISABLED +'">'+ layui.i18n.L('form.NotHaveOption') +'</dd>');
               return arr.join('');
             }(othis.find('*')) +'</dl>'
           ,'</div>'].join(''));
@@ -605,7 +605,7 @@ layui.define(['layer', 'i18n'], function(exports){
       }
     };
     type ? (
-      items[type] ? items[type]() : hint.error(i18n.L('form.NotSupportFormRender',type))
+      items[type] ? items[type]() : hint.error(layui.i18n.L('form.NotSupportFormRender',type))
     ) : layui.each(items, function(index, item){
       item();
     });
@@ -662,7 +662,7 @@ layui.define(['layer', 'i18n'], function(exports){
                 return othis;
               }(), {tips: 1});
             } else if(verType === 'alert') {
-              layer.alert(errorText, {title: i18n.L('form.Tip'), shadeClose: true});
+              layer.alert(errorText, {title: layui.i18n.L('form.Tip'), shadeClose: true});
             } else {
               layer.msg(errorText, {icon: 5, shift: 6});
             }

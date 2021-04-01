@@ -12,7 +12,8 @@
     "test": "karma start karma.conf.unit.js",
     "test:cov": "npm test -- --reporters mocha,coverage",
     "test:sauce": "karma start karma.conf.sauce.js",
-    "test:watch": "npm test -- --auto-watch --no-single-run"
+    "test:watch": "npm test -- --auto-watch --no-single-run",
+    "build":"gulp default"
   },
   "repository": {
     "type": "git",

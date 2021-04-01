@@ -181,7 +181,7 @@ layui.define(['jquery', 'i18n'], function(exports){
           othis.attr('overflow', '');
           span.on('click', function(e){
             title[this.title ? 'removeClass' : 'addClass'](MORE);
-            this.title = this.title ? '' : i18n.L('element.Shrink');
+            this.title = this.title ? '' : layui.i18n.L('element.Shrink');
           });
         } else {
           title.find('.'+BAR).remove();

@@ -97,7 +97,6 @@ layui.define(function (exports) {
         }
 
         var copiedArguments = Array.prototype.slice.call(arguments, 0);
-        copiedArguments.splice(1, 1);
         copiedArguments[0] = value;
 
         return formatString.apply(this, copiedArguments);
